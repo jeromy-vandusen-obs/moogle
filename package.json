@@ -1,0 +1,25 @@
+{
+  "name": "moogle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeromy-vandusen-obs/moogle.git"
+  },
+  "keywords": [],
+  "author": "Jeromy Van Dusen <jvandusen@obsglobal.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeromy-vandusen-obs/moogle/issues"
+  },
+  "homepage": "https://github.com/jeromy-vandusen-obs/moogle#readme",
+  "devDependencies": {
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.1"
+  }
+}
