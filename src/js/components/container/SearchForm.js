@@ -8,38 +8,31 @@ import SearchResults from "../presentational/SearchResults"
 import QueryTypes from "../presentational/QueryTypes"
 
 class SearchForm extends Component {
-    constructor() {
+    constructor({ onQueryEntered, onTypeSelected, onSearchCompleted }) {
         super()
 
-        this.state = {
-            query: "",
-            type: "artist",
-            hasSearched: false,
-            searchResults: []
-        }
-
         this.handleChange = event => {
-            this.setState({ query: event.target.value })
+            onQueryEntered(event.target.value)
         }
 
         this.handleSelection = event => {
-            this.setState({ type: event.target.value })
+            onTypeSelected(event.target.value)
         }
 
         this.performSearch = event => {
             event.preventDefault()
-            const { query, type } = this.state
+            const { query, type } = this.props
 
             axios.get(
                 `https://api.discogs.com/database/search?${type}=${query}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
             ).then(response => {
-                this.setState({ hasSearched: true, searchResults: response.data.results })
+                onSearchCompleted(response.data.results)
             })
         }
     }
 
     render() {
-        const { query, type, hasSearched, searchResults } = this.state
+        const { query, type, hasSearched, searchResults } = this.props
         return (
             <div>
                 <form id="search-form" className="form-horizontal" onSubmit={this.performSearch}>

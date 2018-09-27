@@ -1,7 +1,83 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { combineReducers, createStore } from "redux"
 
 import SearchForm from "./js/components/container/SearchForm"
 
-const wrapper = document.getElementById("moogle")
-wrapper ? ReactDOM.render(<SearchForm />, wrapper) : false
+const query = (
+    state = "",
+    action
+) => {
+    switch (action.type) {
+        case 'ENTER_QUERY':
+            return action.value
+        default:
+            return state
+    }
+}
+
+const type = (
+    state = "artist",
+    action
+) => {
+    switch (action.type) {
+        case 'SELECT_TYPE':
+            return action.value
+        default:
+            return state
+    }
+}
+
+const search = (
+    state = {
+        hasSearched: false,
+        searchResults: []
+    },
+    action
+) => {
+    switch (action.type) {
+        case 'DISPLAY_RESULTS':
+            return { hasSearched: true, searchResults: action.value }
+        default:
+            return state
+    }
+}
+
+const searchPage = combineReducers({
+    query,
+    type,
+    search
+})
+const store = createStore(searchPage)
+
+const render = () => {
+    ReactDOM.render(
+        <SearchForm
+            query={store.getState().query}
+            type={store.getState().type}
+            hasSearched={store.getState().search.hasSearched}
+            searchResults={store.getState().search.searchResults}
+            onQueryEntered={value =>
+                store.dispatch({
+                    type: 'ENTER_QUERY',
+                    value: value
+                })
+            }
+            onTypeSelected={type =>
+                store.dispatch({
+                    type: 'SELECT_TYPE',
+                    value: type
+                })
+            }
+            onSearchCompleted={searchResults =>
+                store.dispatch({
+                    type: 'DISPLAY_RESULTS',
+                    value: searchResults
+                })
+            }/>,
+        document.getElementById("moogle")
+    )
+}
+
+store.subscribe(render)
+render()

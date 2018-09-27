@@ -16,7 +16,7 @@ SearchResult.propTypes = {
     id: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    year: PropTypes.string.isRequired,
+    year: PropTypes.string,
     country: PropTypes.string.isRequired,
     thumb: PropTypes.string.isRequired,
 }
