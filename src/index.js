@@ -53,10 +53,7 @@ const store = createStore(searchPage)
 const render = () => {
     ReactDOM.render(
         <SearchForm
-            query={store.getState().query}
-            type={store.getState().type}
-            hasSearched={store.getState().search.hasSearched}
-            searchResults={store.getState().search.searchResults}
+            state={store.getState()}
             onQueryEntered={value =>
                 store.dispatch({
                     type: 'ENTER_QUERY',
@@ -75,7 +72,7 @@ const render = () => {
                     value: searchResults
                 })
             }/>,
-        document.getElementById("moogle")
+        document.getElementById("root")
     )
 }
 
