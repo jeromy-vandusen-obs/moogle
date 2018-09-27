@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import ReactDOM from "react-dom"
 import axios from "axios"
 
 import Logo from "../presentational/Logo"
@@ -72,6 +71,3 @@ class SearchForm extends Component {
 }
 
 export default SearchForm
-
-const wrapper = document.getElementById("moogle")
-wrapper ? ReactDOM.render(<SearchForm />, wrapper) : false
