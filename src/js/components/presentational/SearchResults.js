@@ -19,6 +19,7 @@ const SearchResults = ({ searchResults }) => (
             {
                 searchResults.map(searchResult => (
                     <SearchResult
+                        key={searchResult.id}
                         id={searchResult.id}
                         type={searchResult.type}
                         title={searchResult.title}

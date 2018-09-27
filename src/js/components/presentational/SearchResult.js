@@ -13,7 +13,7 @@ const SearchResult = ({ id, type, title, year, country, thumb }) => (
 )
 
 SearchResult.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,

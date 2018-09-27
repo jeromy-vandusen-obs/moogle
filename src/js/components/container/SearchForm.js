@@ -6,6 +6,7 @@ import Logo from "../presentational/Logo"
 import Input from "../presentational/Input"
 import SubmitButton from "../presentational/SubmitButton"
 import SearchResults from "../presentational/SearchResults"
+import QueryTypes from "../presentational/QueryTypes"
 
 class SearchForm extends Component {
     constructor() {
@@ -13,20 +14,25 @@ class SearchForm extends Component {
 
         this.state = {
             query: "",
+            type: "artist",
             hasSearched: false,
             searchResults: []
         }
 
         this.handleChange = event => {
-            this.setState({ [event.target.id]: event.target.value })
+            this.setState({ query: event.target.value })
+        }
+
+        this.handleSelection = event => {
+            this.setState({ type: event.target.value })
         }
 
         this.performSearch = event => {
             event.preventDefault()
-            const value = this.state.query
+            const { query, type } = this.state
 
             axios.get(
-                `https://api.discogs.com/database/search?artist=${value}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
+                `https://api.discogs.com/database/search?${type}=${query}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
             ).then(response => {
                 this.setState({ hasSearched: true, searchResults: response.data.results })
             })
@@ -34,7 +40,7 @@ class SearchForm extends Component {
     }
 
     render() {
-        const { query, hasSearched, searchResults } = this.state
+        const { query, type, hasSearched, searchResults } = this.state
         return (
             <div>
                 <form id="search-form" className="form-horizontal" onSubmit={this.performSearch}>
@@ -54,6 +60,9 @@ class SearchForm extends Component {
                                 icon="fas fa-search"
                                 buttonClassName="btn btn-primary" />
                         </div>
+                    </div>
+                    <div className="input-group">
+                        <QueryTypes handleSelection={this.handleSelection} />
                     </div>
                 </form>
                 { hasSearched ? <SearchResults searchResults={searchResults} /> : null }
