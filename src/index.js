@@ -40,9 +40,8 @@ const searchPage = combineReducers({
     searchForm,
     search
 })
-const store = createStore(searchPage)
 
 ReactDOM.render(
-    <SearchPage store={store} />,
+    <SearchPage store={createStore(searchPage)} />,
     document.getElementById("root")
 )
