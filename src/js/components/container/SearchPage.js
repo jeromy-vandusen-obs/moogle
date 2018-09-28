@@ -8,13 +8,9 @@ import SearchResults from "../presentational/SearchResults"
 import QueryTypes from "../presentational/QueryTypes"
 
 class SearchPage extends Component {
-    constructor({ store }) {
-        super()
-        this.store = store
-    }
-
     componentDidMount() {
-        this.unsubscribe = this.store.subscribe(() => {
+        const { store } = this.props
+        this.unsubscribe = store.subscribe(() => {
             this.forceUpdate()
         })
     }
@@ -32,15 +28,16 @@ class SearchPage extends Component {
     }
 
     onSearchCompleted(searchResults) {
-        this.store.dispatch({
+        const { store } = this.props
+        store.dispatch({
             type: 'DISPLAY_RESULTS',
             value: searchResults
         })
     }
 
     render() {
-        const { onQueryEntered, onTypeSelected, onSearchCompleted } = this.props
-        const { searchForm: { query, type }, search: { hasSearched, searchResults } } = this.store.getState()
+        const { store } = this.props
+        const { searchForm: { query, type }, search: { hasSearched, searchResults } } = store.getState()
 
         return (
             <div>
@@ -58,7 +55,7 @@ class SearchPage extends Component {
                             value={query}
                             autoFocus="autoFocus"
                             handleChange={event => {
-                                this.store.dispatch({
+                                store.dispatch({
                                     type: 'ENTER_QUERY',
                                     value: event.target.value
                                 })
@@ -72,7 +69,7 @@ class SearchPage extends Component {
                     </div>
                     <div className="input-group">
                         <QueryTypes handleSelection={event => {
-                            this.store.dispatch({
+                            store.dispatch({
                                 type: 'SELECT_TYPE',
                                 value: event.target.value
                             })
