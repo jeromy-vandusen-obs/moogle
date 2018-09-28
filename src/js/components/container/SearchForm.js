@@ -21,7 +21,7 @@ class SearchForm extends Component {
 
         this.performSearch = event => {
             event.preventDefault()
-            const { query, type } = this.props.state
+            const { searchForm: { query, type } } = this.props.state
 
             axios.get(
                 `https://api.discogs.com/database/search?${type}=${query}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
@@ -32,7 +32,7 @@ class SearchForm extends Component {
     }
 
     render() {
-        const { query, type, search: { hasSearched, searchResults } } = this.props.state
+        const { searchForm: { query, type }, search: { hasSearched, searchResults } } = this.props.state
         return (
             <div>
                 <form id="search-form" className="form-horizontal" onSubmit={this.performSearch}>

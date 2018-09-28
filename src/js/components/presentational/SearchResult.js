@@ -17,8 +17,8 @@ SearchResult.propTypes = {
     type: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     year: PropTypes.string,
-    country: PropTypes.string.isRequired,
-    thumb: PropTypes.string.isRequired,
+    country: PropTypes.string,
+    thumb: PropTypes.string,
 }
 
 export default SearchResult

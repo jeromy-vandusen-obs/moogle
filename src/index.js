@@ -4,25 +4,18 @@ import { combineReducers, createStore } from "redux"
 
 import SearchForm from "./js/components/container/SearchForm"
 
-const query = (
-    state = "",
+const searchForm = (
+    state = {
+        query: "",
+        type: "artist"
+    },
     action
 ) => {
     switch (action.type) {
         case 'ENTER_QUERY':
-            return action.value
-        default:
-            return state
-    }
-}
-
-const type = (
-    state = "artist",
-    action
-) => {
-    switch (action.type) {
+            return { ...state, query: action.value }
         case 'SELECT_TYPE':
-            return action.value
+            return { ...state, type: action.value }
         default:
             return state
     }
@@ -44,8 +37,7 @@ const search = (
 }
 
 const searchPage = combineReducers({
-    query,
-    type,
+    searchForm,
     search
 })
 const store = createStore(searchPage)
