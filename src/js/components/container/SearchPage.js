@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import axios from "axios"
 
 import Logo from "../presentational/Logo"
@@ -9,7 +10,7 @@ import QueryTypes from "../presentational/QueryTypes"
 
 class SearchPage extends Component {
     componentDidMount() {
-        const { store } = this.props
+        const { store } = this.context
         this.unsubscribe = store.subscribe(() => {
             this.forceUpdate()
         })
@@ -28,7 +29,7 @@ class SearchPage extends Component {
     }
 
     onSearchCompleted(searchResults) {
-        const { store } = this.props
+        const { store } = this.context
         store.dispatch({
             type: 'DISPLAY_RESULTS',
             value: searchResults
@@ -36,7 +37,7 @@ class SearchPage extends Component {
     }
 
     render() {
-        const { store } = this.props
+        const { store } = this.context
         const { searchForm: { query, type }, search: { hasSearched, searchResults } } = store.getState()
 
         return (
@@ -80,6 +81,10 @@ class SearchPage extends Component {
             </div>
         )
     }
+}
+
+SearchPage.contextTypes = {
+    store: PropTypes.object
 }
 
 export default SearchPage

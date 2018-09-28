@@ -1,5 +1,6 @@
-import React from "react"
+import React, { Component } from "react"
 import ReactDOM from "react-dom"
+import PropTypes from "prop-types"
 import { combineReducers, createStore } from "redux"
 
 import SearchPage from "./js/components/container/SearchPage"
@@ -41,7 +42,25 @@ const searchPage = combineReducers({
     search
 })
 
+class Provider extends Component {
+    getChildContext() {
+        return {
+            store: this.props.store
+        }
+    }
+
+    render() {
+        return this.props.children
+    }
+}
+
+Provider.childContextTypes = {
+    store: PropTypes.object
+}
+
 ReactDOM.render(
-    <SearchPage store={createStore(searchPage)} />,
+    <Provider store={createStore(searchPage)}>
+        <SearchPage />
+    </Provider>,
     document.getElementById("root")
 )
