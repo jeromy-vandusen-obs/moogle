@@ -4,7 +4,7 @@ import axios from "axios"
 
 import Logo from "../presentational/Logo"
 import InputQuery from "../presentational/InputQuery"
-import SubmitButton from "../presentational/SubmitButton"
+import SubmitButtonSearch from "../presentational/SubmitButtonSearch"
 import QueryTypes from "../presentational/QueryTypes"
 import SearchResults from "../presentational/SearchResults"
 
@@ -52,10 +52,7 @@ class SearchPage extends Component {
                     <div className="input-group">
                         <InputQuery />
                         <div className="input-group-append">
-                            <SubmitButton
-                                id="search-button"
-                                icon="fas fa-search"
-                                buttonClassName="btn btn-primary" />
+                            <SubmitButtonSearch />
                         </div>
                     </div>
                     <div className="input-group">
