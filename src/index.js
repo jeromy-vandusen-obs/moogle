@@ -5,11 +5,19 @@ import { combineReducers, createStore } from "redux"
 
 import SearchPage from "./js/components/functional/SearchPage"
 
-const searchForm = (
-    state = {
+const initialState = {
+    searchForm: {
         query: "",
         type: "artist"
     },
+    search: {
+        hasSearched: false,
+        searchResults: []
+    }
+}
+
+const searchForm = (
+    state = initialState.searchForm,
     action
 ) => {
     switch (action.type) {
@@ -23,10 +31,7 @@ const searchForm = (
 }
 
 const search = (
-    state = {
-        hasSearched: false,
-        searchResults: []
-    },
+    state = initialState.search,
     action
 ) => {
     switch (action.type) {
@@ -43,7 +48,7 @@ const searchPage = combineReducers({
 })
 
 ReactDOM.render(
-    <Provider store={createStore(searchPage)}>
+    <Provider store={createStore(searchPage, initialState)}>
         <SearchPage />
     </Provider>,
     document.getElementById("root")

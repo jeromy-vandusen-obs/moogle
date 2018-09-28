@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import { connect } from "react-redux"
 import axios from "axios"
 
 import Logo from "../presentational/Logo"
@@ -8,65 +9,59 @@ import SubmitButtonSearch from "../presentational/SubmitButtonSearch"
 import QueryTypes from "../presentational/QueryTypes"
 import SearchResults from "../presentational/SearchResults"
 
-class SearchPage extends Component {
-    componentDidMount() {
-        const { store } = this.context
-        this.unsubscribe = store.subscribe(() => {
-            this.forceUpdate()
-        })
-    }
+const mapStateToProps = state => ({
+    query: state.searchForm.query,
+    type: state.searchForm.type,
+    hasSearched: state.search.hasSearched,
+    searchResults: state.search.searchResults
+})
 
-    componentWillUnmount() {
-        this.unsubscribe()
-    }
-
-    performSearch(query, type) {
+const mapDispatchToProps = dispatch => ({
+    performSearch: (query, type) => {
         axios.get(
             `https://api.discogs.com/database/search?${type}=${query}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
         ).then(response => {
-            this.onSearchCompleted(response.data.results)
+            dispatch({
+                type: 'DISPLAY_RESULTS',
+                value: response.data.results
+            })
         })
     }
+})
 
-    onSearchCompleted(searchResults) {
-        const { store } = this.context
-        store.dispatch({
-            type: 'DISPLAY_RESULTS',
-            value: searchResults
-        })
-    }
-
-    render() {
-        const { store } = this.context
-        const { searchForm: { query, type }, search: { hasSearched, searchResults } } = store.getState()
-
-        return (
-            <div>
-                <form id="search-form" className="form-horizontal" onSubmit={event => {
-                    event.preventDefault()
-                    this.performSearch(query, type)
-                }}>
-                    <div className="input-group">
-                        <Logo />
-                    </div>
-                    <div className="input-group">
-                        <InputQuery />
-                        <div className="input-group-append">
-                            <SubmitButtonSearch />
-                        </div>
-                    </div>
-                    <div className="input-group">
-                        <QueryTypes />
-                    </div>
-                </form>
-                { hasSearched ? <SearchResults searchResults={searchResults} /> : null }
+const SearchPageAtom = ({ query, type, hasSearched, searchResults, performSearch }) => (
+    <div>
+        <form id="search-form" className="form-horizontal" onSubmit={event => {
+            event.preventDefault()
+            performSearch(query, type)
+        }}>
+            <div className="input-group">
+                <Logo />
             </div>
-        )
-    }
+            <div className="input-group">
+                <InputQuery />
+                <div className="input-group-append">
+                    <SubmitButtonSearch />
+                </div>
+            </div>
+            <div className="input-group">
+                <QueryTypes />
+            </div>
+        </form>
+        { hasSearched ? <SearchResults searchResults={searchResults} /> : null }
+    </div>
+)
+
+SearchPageAtom.propTypes = {
+    query: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    hasSearched: PropTypes.bool.isRequired,
+    searchResults: PropTypes.array.isRequired
 }
 
-SearchPage.contextTypes = {
-    store: PropTypes.object
-}
+const SearchPage = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SearchPageAtom)
 
 export default SearchPage
