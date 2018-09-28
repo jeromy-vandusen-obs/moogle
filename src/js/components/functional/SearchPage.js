@@ -3,10 +3,10 @@ import PropTypes from "prop-types"
 import axios from "axios"
 
 import Logo from "../presentational/Logo"
-import Input from "../presentational/Input"
+import InputQuery from "../presentational/InputQuery"
 import SubmitButton from "../presentational/SubmitButton"
-import SearchResults from "../presentational/SearchResults"
 import QueryTypes from "../presentational/QueryTypes"
+import SearchResults from "../presentational/SearchResults"
 
 class SearchPage extends Component {
     componentDidMount() {
@@ -50,17 +50,7 @@ class SearchPage extends Component {
                         <Logo />
                     </div>
                     <div className="input-group">
-                        <Input
-                            id="query"
-                            type="text"
-                            value={query}
-                            autoFocus="autoFocus"
-                            handleChange={event => {
-                                store.dispatch({
-                                    type: 'ENTER_QUERY',
-                                    value: event.target.value
-                                })
-                            }} />
+                        <InputQuery />
                         <div className="input-group-append">
                             <SubmitButton
                                 id="search-button"
@@ -69,12 +59,7 @@ class SearchPage extends Component {
                         </div>
                     </div>
                     <div className="input-group">
-                        <QueryTypes handleSelection={event => {
-                            store.dispatch({
-                                type: 'SELECT_TYPE',
-                                value: event.target.value
-                            })
-                        }} />
+                        <QueryTypes />
                     </div>
                 </form>
                 { hasSearched ? <SearchResults searchResults={searchResults} /> : null }
