@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { combineReducers, createStore } from "redux"
 
-import SearchForm from "./js/components/container/SearchForm"
+import SearchPage from "./js/components/container/SearchPage"
 
 const searchForm = (
     state = {
@@ -42,31 +42,7 @@ const searchPage = combineReducers({
 })
 const store = createStore(searchPage)
 
-const render = () => {
-    ReactDOM.render(
-        <SearchForm
-            state={store.getState()}
-            onQueryEntered={value =>
-                store.dispatch({
-                    type: 'ENTER_QUERY',
-                    value: value
-                })
-            }
-            onTypeSelected={type =>
-                store.dispatch({
-                    type: 'SELECT_TYPE',
-                    value: type
-                })
-            }
-            onSearchCompleted={searchResults =>
-                store.dispatch({
-                    type: 'DISPLAY_RESULTS',
-                    value: searchResults
-                })
-            }/>,
-        document.getElementById("root")
-    )
-}
-
-store.subscribe(render)
-render()
+ReactDOM.render(
+    <SearchPage store={store} />,
+    document.getElementById("root")
+)
