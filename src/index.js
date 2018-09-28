@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import ReactDOM from "react-dom"
-import PropTypes from "prop-types"
+import { Provider } from "react-redux"
 import { combineReducers, createStore } from "redux"
 
-import SearchPage from "./js/components/container/SearchPage"
+import SearchPage from "./js/components/functional/SearchPage"
 
 const searchForm = (
     state = {
@@ -41,22 +41,6 @@ const searchPage = combineReducers({
     searchForm,
     search
 })
-
-class Provider extends Component {
-    getChildContext() {
-        return {
-            store: this.props.store
-        }
-    }
-
-    render() {
-        return this.props.children
-    }
-}
-
-Provider.childContextTypes = {
-    store: PropTypes.object
-}
 
 ReactDOM.render(
     <Provider store={createStore(searchPage)}>
