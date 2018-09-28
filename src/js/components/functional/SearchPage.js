@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-const SearchPageAtom = ({ query, type, hasSearched, searchResults, performSearch }) => (
+const Search = ({ query, type, hasSearched, searchResults, performSearch }) => (
     <div>
         <form id="search-form" className="form-horizontal" onSubmit={event => {
             event.preventDefault()
@@ -52,7 +52,7 @@ const SearchPageAtom = ({ query, type, hasSearched, searchResults, performSearch
     </div>
 )
 
-SearchPageAtom.propTypes = {
+Search.propTypes = {
     query: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     hasSearched: PropTypes.bool.isRequired,
@@ -62,6 +62,6 @@ SearchPageAtom.propTypes = {
 const SearchPage = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SearchPageAtom)
+)(Search)
 
 export default SearchPage
