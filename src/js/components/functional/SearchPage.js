@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     performSearch: (query, type) => {
         axios.get(
-            `https://api.discogs.com/database/search?${type}=${query}&token=KGlofzPxbKEohvnzsGlWNEHrJviqGZtrnuhYJgkX`
+            `https://api.discogs.com/database/search?${type}=${query}&token=[[YOUR_ACCESS_TOKEN]]`
         ).then(response => {
             dispatch({
                 type: 'DISPLAY_RESULTS',
